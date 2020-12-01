@@ -33,6 +33,7 @@ body {
   height: 100%;
   @include flex-centered;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .modal {
