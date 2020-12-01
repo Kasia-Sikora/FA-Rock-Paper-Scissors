@@ -367,13 +367,13 @@ body {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
 }
 
 .modal {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   z-index: 2;
@@ -382,7 +382,7 @@ body {
 .modal .rules-modal {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   justify-content: space-between;
   flex-direction: column;
   background-color: white;
@@ -390,6 +390,9 @@ body {
   width: 100%;
   height: 100%;
   padding: 17% 0;
+}
+.modal .rules-modal img:nth-of-type(1) {
+  max-width: 100%;
 }
 .modal .rules-modal img:nth-of-type(2) {
   max-width: 100%;
@@ -402,7 +405,7 @@ body {
   border: #606e85 3px solid;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   justify-content: space-between;
   border-radius: 10px;
   font-weight: 700;
@@ -436,10 +439,10 @@ body {
 .game {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   background: url("../images/bg-triangle.svg") center center no-repeat;
-  background-size: 70%;
+  background-size: 60%;
   width: 90%;
   margin-top: 5vh;
   max-width: 700px;
@@ -448,7 +451,9 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  width: 20vh;
+  height: 20vh;
 }
 .game .paper {
   background: radial-gradient(#4865f4, #5671f5);
@@ -463,29 +468,33 @@ body {
 .game .circle-computer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   border-radius: 100%;
-  width: 130px;
-  height: 130px;
+  width: 15vh;
+  height: 15vh;
   position: relative;
   box-shadow: inset 0 -4px 0.5px 2px rgba(0, 0, 0, 0.3);
-  margin: 19px;
   z-index: 1;
 }
 .game .circle .circle-inside,
 .game .circle-computer .circle-inside {
-  width: 100px;
-  height: 100px;
+  width: 11vh;
+  height: 11vh;
   background-color: white;
   border-radius: 100%;
   box-shadow: inset 0 3px 0.5px 2px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+}
+.game .circle .circle-inside img,
+.game .circle-computer .circle-inside img {
+  width: 6vh;
 }
 .game .circle-computer {
   box-shadow: none;
   display: none;
+  margin: 0 5%;
 }
 .game .circle-computer .circle-inside {
   background-color: rgba(0, 0, 0, 0.1);
@@ -522,7 +531,7 @@ button {
 .result {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
   width: 100%;
   margin-top: 10%;
@@ -559,15 +568,15 @@ button {
   }
 
   .game {
-    background: url("../images/bg-triangle.svg") center 8vh no-repeat;
+    background: url("../images/bg-triangle.svg") center no-repeat;
     background-size: 40%;
     position: relative;
-    max-width: 700px;
+    max-width: 60vh;
     margin-top: unset;
   }
   .game .container {
-    width: 40%;
-    height: 60%;
+    width: 25vh;
+    height: 25vh;
   }
 
   .rules-button {

@@ -36,8 +36,8 @@ body {
 }
 
 .modal {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   z-index: 2;
@@ -52,6 +52,10 @@ body {
     width: 100%;
     height: 100%;
     padding: 17% 0;
+
+    img:nth-of-type(1) {
+      max-width: 100%;
+    }
 
     img:nth-of-type(2) {
       max-width: 100%;
@@ -105,7 +109,7 @@ body {
   @include flex-centered;
   flex-wrap: wrap;
   background: url("../images/bg-triangle.svg") center center no-repeat;
-  background-size: 70%;
+  background-size: 60%;
   width: 90%;
   margin-top: 5vh;
   max-width: 700px;
@@ -113,6 +117,8 @@ body {
   .container {
     position: relative;
     @include flex-centered;
+    width: 20vh;
+    height: 20vh;
   }
 
   .paper {
@@ -131,26 +137,31 @@ body {
   .circle-computer {
     @include flex-centered;
     border-radius: $circleRadius;
-    width: 130px;
-    height: 130px;
+    width: 15vh;
+    height: 15vh;
     position: relative;
     box-shadow: inset 0 -4px 0.5px 2px rgba(0, 0, 0, 0.3);
-    margin: 19px;
+    //margin: 19px;
     z-index: 1;
 
     .circle-inside {
-      width: 100px;
-      height: 100px;
+      width: 11vh;
+      height: 11vh;
       background-color: $white;
       border-radius: $circleRadius;
       box-shadow: inset 0 3px 0.5px 2px rgba(0, 0, 0, 0.2);
       @include flex-centered;
+
+      img{
+        width: 6vh;
+      }
     }
   }
 
   .circle-computer {
     box-shadow: none;
     display: none;
+    margin: 0 5%;
 
     .circle-inside {
       background-color: rgba(0, 0, 0, 0.1);
@@ -229,15 +240,15 @@ button {
   }
 
   .game {
-    background: url("../images/bg-triangle.svg") center 8vh no-repeat;
+    background: url("../images/bg-triangle.svg") center no-repeat;
     background-size: 40%;
     position: relative;
-    max-width: 700px;
+    max-width: 60vh;
     margin-top: unset;
 
     .container {
-      width: 40%;
-      height: 60%;
+      width: 25vh;
+      height: 25vh;
     }
   }
 
