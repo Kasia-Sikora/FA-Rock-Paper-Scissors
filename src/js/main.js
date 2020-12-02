@@ -3,10 +3,8 @@ import {localStoragePersist} from "./localStorage.js";
 import {gameRules} from "./gameRules.js";
 
 function start() {
-    gameRules.setDifficulty();
-    modalInit();
+    gameRules.setDifficulty(modalInit);
     localStoragePersist.getScore();
-    gameRules.init();
 }
 
 start();

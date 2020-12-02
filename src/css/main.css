@@ -460,10 +460,9 @@ body {
   justify-content: space-around;
   flex-wrap: wrap;
   background: url("../images/bg-triangle.svg") center center no-repeat;
-  background-size: 60%;
-  width: 90%;
-  margin-top: 5vh;
+  background-size: 50%;
   max-width: 700px;
+  margin-top: auto;
 }
 .game .container {
   position: relative;
@@ -472,6 +471,11 @@ body {
   justify-content: space-around;
   width: 20vh;
   height: 20vh;
+  display: none;
+}
+.game .container:nth-of-type(4),
+.game .container:nth-of-type(5) {
+  display: none;
 }
 .game .paper {
   background: radial-gradient(#4865f4, #5671f5);
@@ -593,7 +597,7 @@ button {
 
   .game {
     background: url("../images/bg-triangle.svg") center no-repeat;
-    background-size: 40%;
+    background-size: 50%;
     position: relative;
     max-width: 60vh;
     margin-top: unset;
