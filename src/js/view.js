@@ -93,9 +93,9 @@ export const view = {
             this.scissorButton.parentElement.style.width = "100%";
             this.scissorButton.parentElement.style.marginBottom = "-7vh";
             this.gameContainer.insertBefore(this.spockButton.parentElement, this.computersEmptySpace);
-            this.spockButton.parentElement.style.marginLeft = "-5vh";
+            this.spockButton.parentElement.style.marginLeft = "-3vh";
             this.gameContainer.insertBefore(this.paperButton.parentElement, this.computersEmptySpace);
-            this.paperButton.parentElement.style.marginRight = "-5vh";
+            this.paperButton.parentElement.style.marginRight = "-3vh";
             this.gameContainer.insertBefore(this.lizardButton.parentElement, this.computersEmptySpace);
             this.lizardButton.parentElement.style.marginLeft = "3vh";
             this.gameContainer.insertBefore(this.rockButton.parentElement, this.computersEmptySpace);
