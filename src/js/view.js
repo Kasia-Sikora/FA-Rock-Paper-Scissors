@@ -11,6 +11,8 @@ export const view = {
     scissorButton: document.querySelector('.scissors'),
     rockButton: document.querySelector('.rock'),
     pulse: document.querySelectorAll('.pulse'),
+    game: document.querySelector('.page'),
+    difficultyPage: document.querySelector('.start-page'),
 
     setBackgroundOnStart: function () {
         this.removeUnnecessaryElements();
@@ -74,5 +76,10 @@ export const view = {
         this.gameContainer.insertBefore(this.paperButton.parentElement, this.computersEmptySpace);
         this.gameContainer.insertBefore(this.scissorButton.parentElement, this.computersEmptySpace);
         this.gameContainer.insertBefore(this.rockButton.parentElement, this.computersEmptySpace);
+    },
+
+    displayGame(){
+        this.game.style.display = 'flex';
+        this.difficultyPage.style.display = 'none';
     }
 }

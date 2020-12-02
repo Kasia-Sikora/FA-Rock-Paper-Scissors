@@ -3,6 +3,8 @@ import {localStoragePersist} from "./localStorage.js";
 
 export const gameRules = {
 
+    difficulty: '',
+
     setButtonPickByComputer: function (buttons) {
         const buttonPickedByComputer = this.getButton(buttons);
         delete buttonPickedByComputer.firstElementChild.dataset.userPick;
@@ -67,5 +69,20 @@ export const gameRules = {
         buttonsToPick.forEach(el => el.addEventListener('click', () => {
             this.setButtonPickedByUser(el, buttonsToPick);
         }))
+    },
+
+    setDifficulty() {
+        let hard = document.getElementById('hard-lvl');
+        let normal = document.getElementById('normal-lvl');
+
+        hard.addEventListener('click', () => {
+            this.difficulty = 'hard';
+            view.displayGame();
+        })
+
+        normal.addEventListener('click', () => {
+            this.difficulty = 'normal';
+            view.displayGame();
+        })
     }
 }
