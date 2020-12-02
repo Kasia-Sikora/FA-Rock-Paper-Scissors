@@ -3,6 +3,8 @@ import {localStoragePersist} from "./localStorage.js";
 
 export const gameRules = {
 
+    difficulty: '',
+
     setButtonPickByComputer: function (buttons) {
         const buttonPickedByComputer = this.getButton(buttons);
         delete buttonPickedByComputer.firstElementChild.dataset.userPick;
@@ -17,9 +19,11 @@ export const gameRules = {
         let computersNode = document.querySelector('[data-computer-pick = "true"]');
 
         if (usersNode.classList[1] !== computersNode.classList[1]) {
-            if (usersNode.classList[1] === 'paper' && computersNode.classList[1] === 'rock' ||
-                usersNode.classList[1] === 'rock' && computersNode.classList[1] === 'scissors' ||
-                usersNode.classList[1] === 'scissors' && computersNode.classList[1] === 'paper') {
+            if (usersNode.classList[1] === 'paper' && (computersNode.classList[1] === 'rock' || computersNode.classList[1] === 'spock') ||
+                usersNode.classList[1] === 'rock' && (computersNode.classList[1] === 'scissors' || computersNode.classList[1] === 'lizard') ||
+                usersNode.classList[1] === 'scissors' && (computersNode.classList[1] === 'paper' || computersNode.classList[1] === 'lizard') ||
+                usersNode.classList[1] === 'lizard' && (computersNode.classList[1] === 'paper' || computersNode.classList[1] === 'spock') ||
+                usersNode.classList[1] === 'spock' && (computersNode.classList[1] === 'scissors' || computersNode.classList[1] === 'rock')) {
                 this.changeScore(1);
                 return usersNode;
             }
@@ -50,7 +54,7 @@ export const gameRules = {
 
     startGame(buttonsToPick) {
         view.setBackgroundOnGame();
-        view.displayPlayersChoice(buttonsToPick);
+        view.displayPlayersChoice(buttonsToPick, this.difficulty);
         this.setButtonPickByComputer(buttonsToPick);
         setTimeout(() => {
             view.viewIfPlayerWins(gameRules.checkWhoWins());
@@ -58,14 +62,38 @@ export const gameRules = {
     },
 
     getButton(buttons) {
-        let random = Math.floor((3) * Math.random());
+        let random = this.difficulty === 'normal' ? Math.floor((3) * Math.random()) : Math.floor((5) * Math.random());
         return buttons[random].parentElement.cloneNode(true);
     },
 
     init: function () {
-        let buttonsToPick = document.querySelectorAll('.circle');
+        let buttonsToPick;
+        if (this.difficulty === 'bonus') {
+            buttonsToPick = document.querySelectorAll('.circle');
+        } else {
+            buttonsToPick = document.querySelectorAll('.normal');
+        }
         buttonsToPick.forEach(el => el.addEventListener('click', () => {
             this.setButtonPickedByUser(el, buttonsToPick);
         }))
+    },
+
+    setDifficulty(callback) {
+        let hard = document.getElementById('hard-lvl');
+        let normal = document.getElementById('normal-lvl');
+
+        hard.addEventListener('click', () => {
+            this.difficulty = 'bonus';
+            view.displayGame(this.difficulty);
+            callback(this.difficulty)
+            this.init();
+        })
+
+        normal.addEventListener('click', () => {
+            this.difficulty = 'normal';
+            callback(this.difficulty);
+            view.displayGame(this.difficulty);
+            this.init();
+        })
     }
 }

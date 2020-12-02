@@ -15,11 +15,17 @@
 
 </head>
 <body>
+<div class="start-page">
+    <div class="start-title">rock/paper/scissors</div>
+    <div class="difficulty">difficulty</div>
+    <button id="normal-lvl">normal</button>
+    <button id="hard-lvl">hard</button>
+</div>
 <div class="page">
     <div class="modal">
         <div class="rules-modal">
             <h1>RULES</h1>
-            <img src="src/images/image-rules.svg" alt="rules">
+            <img src="src/images/image-rules.svg" id="rules-image" alt="rules">
             <img id="close" src="src/images/icon-close.svg" alt="close">
         </div>
     </div>
@@ -36,23 +42,39 @@
     </div>
     <div class="game">
         <div class="container" id="paper-container">
-            <div class="circle paper">
+            <div class="circle paper normal">
                 <div class="circle-inside">
                     <img src="src/images/icon-paper.svg" alt="paper">
                 </div>
             </div>
             <div class="pulse"></div>
         </div>
+        <div class="container" id="spock-container">
+            <div class="circle spock bonus">
+                <div class="circle-inside">
+                    <img src="src/images/icon-spock.svg" alt="spock">
+                </div>
+            </div>
+            <div class="pulse"></div>
+        </div>
         <div class="container" id="scissors-container">
-            <div class="circle scissors">
+            <div class="circle scissors normal">
                 <div class="circle-inside">
                     <img src="src/images/icon-scissors.svg" alt="scissors">
                 </div>
             </div>
             <div class="pulse"></div>
         </div>
+        <div class="container" id="lizard-container">
+            <div class="circle lizard bonus">
+                <div class="circle-inside">
+                    <img src="src/images/icon-lizard.svg" alt="lizard">
+                </div>
+            </div>
+            <div class="pulse"></div>
+        </div>
         <div class="container" id="rock-container">
-            <div class="circle rock">
+            <div class="circle rock normal">
                 <div class="circle-inside">
                     <img src="src/images/icon-rock.svg" alt="rock">
                 </div>

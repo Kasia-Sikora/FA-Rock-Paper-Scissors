@@ -362,6 +362,22 @@ body {
   font-size: 20px;
 }
 
+.start-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.start-page .difficulty {
+  margin: 10vh;
+  font-size: 2rem;
+}
+.start-page button {
+  margin: 5vh;
+}
+
 .page {
   width: 100%;
   height: 100%;
@@ -370,6 +386,7 @@ body {
   justify-content: space-around;
   flex-direction: column;
   overflow: hidden;
+  display: none;
 }
 
 .modal {
@@ -443,10 +460,9 @@ body {
   justify-content: space-around;
   flex-wrap: wrap;
   background: url("../images/bg-triangle.svg") center center no-repeat;
-  background-size: 60%;
-  width: 90%;
-  margin-top: 5vh;
+  background-size: 50%;
   max-width: 700px;
+  margin-top: auto;
 }
 .game .container {
   position: relative;
@@ -455,6 +471,11 @@ body {
   justify-content: space-around;
   width: 20vh;
   height: 20vh;
+  display: none;
+}
+.game .container:nth-of-type(4),
+.game .container:nth-of-type(5) {
+  display: none;
 }
 .game .paper {
   background: radial-gradient(#4865f4, #5671f5);
@@ -464,6 +485,12 @@ body {
 }
 .game .rock {
   background: radial-gradient(#dc2e4e, #dd405d);
+}
+.game .spock {
+  background: radial-gradient(#40b9ce, #52bed1);
+}
+.game .lizard {
+  background: radial-gradient(#834fe3, #8c5de5);
 }
 .game .circle,
 .game .circle-computer {
@@ -570,7 +597,7 @@ button {
 
   .game {
     background: url("../images/bg-triangle.svg") center no-repeat;
-    background-size: 40%;
+    background-size: 50%;
     position: relative;
     max-width: 60vh;
     margin-top: unset;
