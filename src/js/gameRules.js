@@ -1,20 +1,25 @@
-import {view} from "./view.js";
-import {localStoragePersist} from "./localStorage.js";
+import {Button} from "./button.js";
 
-export const gameRules = {
+export class GameRules {
 
-    difficulty: '',
+    constructor(localStoragePersist, view) {
+        this.localStoragePersist = localStoragePersist;
+        this.view = view;
+        this.listOfButtons = [];
+    }
 
-    setButtonPickByComputer: function (buttons) {
+    difficulty = '';
+
+    setButtonPickByComputer = (buttons) => {
         const buttonPickedByComputer = this.getButton(buttons);
         delete buttonPickedByComputer.firstElementChild.dataset.userPick;
         buttonPickedByComputer.firstElementChild.dataset.computerPick = 'true';
         setTimeout(() => {
-            view.displayComputerChoice(buttonPickedByComputer)
+            this.view.displayComputerChoice(buttonPickedByComputer)
         }, 1500);
-    },
+    };
 
-    checkWhoWins: function () {
+    checkWhoWins = () => {
         let usersNode = document.querySelector('[data-user-pick = "true"]');
         let computersNode = document.querySelector('[data-computer-pick = "true"]');
 
@@ -30,43 +35,43 @@ export const gameRules = {
             this.changeScore(-1);
             return computersNode;
         }
-        view.displayDraw(usersNode, computersNode);
+        this.view.displayDraw(usersNode, computersNode);
         return null;
-    },
+    };
 
-    changeScore(number) {
+    changeScore = (number) => {
         const score = document.getElementById('score');
         if (+(score.innerText) >= 0 && number > 0 ||
             +(score.innerText) > 0) {
-            view.displayScore(+(document.getElementById('score').innerText) + number);
-            localStoragePersist.updateScore(number);
+            this.view.displayScore(+(document.getElementById('score').innerText) + number);
+            this.localStoragePersist.updateScore(number);
         }
-    },
+    };
 
-    setButtonPickedByUser: function (element, buttonsToPick) {
+    setButtonPickedByUser = (element, buttonsToPick) => {
         for (const button of buttonsToPick) {
             element === button ?
                 button.dataset.userPick = 'true' :
                 button.dataset.userPick = 'false';
         }
         this.startGame(buttonsToPick);
-    },
+    };
 
-    startGame(buttonsToPick) {
-        view.setBackgroundOnGame();
-        view.displayPlayersChoice(buttonsToPick, this.difficulty);
+    startGame = (buttonsToPick) => {
+        this.view.setBackgroundOnGame();
+        this.view.displayPlayersChoice(buttonsToPick, this.difficulty);
         this.setButtonPickByComputer(buttonsToPick);
         setTimeout(() => {
-            view.viewIfPlayerWins(gameRules.checkWhoWins());
+            this.view.viewIfPlayerWins(this.checkWhoWins());
         }, 1500);
-    },
+    };
 
-    getButton(buttons) {
+    getButton = (buttons) => {
         let random = this.difficulty === 'normal' ? Math.floor((3) * Math.random()) : Math.floor((5) * Math.random());
         return buttons[random].parentElement.cloneNode(true);
-    },
+    };
 
-    init: function () {
+    init = () => {
         let buttonsToPick;
         if (this.difficulty === 'bonus') {
             buttonsToPick = document.querySelectorAll('.circle');
@@ -76,24 +81,39 @@ export const gameRules = {
         buttonsToPick.forEach(el => el.addEventListener('click', () => {
             this.setButtonPickedByUser(el, buttonsToPick);
         }))
-    },
+    };
 
-    setDifficulty(callback) {
+    setDifficulty = (callback) => {
         let hard = document.getElementById('hard-lvl');
         let normal = document.getElementById('normal-lvl');
 
         hard.addEventListener('click', () => {
             this.difficulty = 'bonus';
-            view.displayGame(this.difficulty);
-            callback(this.difficulty)
+            this.view.displayGame(this.difficulty);
+            callback(this.difficulty);
+            // this.generateButtons(this.difficulty)
             this.init();
         })
 
         normal.addEventListener('click', () => {
             this.difficulty = 'normal';
             callback(this.difficulty);
-            view.displayGame(this.difficulty);
+            this.view.displayGame();
+            // this.generateButtons()
             this.init();
+        })
+    }
+
+    generateButtons() {
+        let buttonsToPick;
+        if (this.difficulty === 'bonus') {
+            buttonsToPick = document.querySelectorAll('.circle');
+        } else {
+            buttonsToPick = document.querySelectorAll('.normal');
+        }
+        buttonsToPick.forEach(el => {
+            let button = new Button(el);
+            this.listOfButtons.push(button);
         })
     }
 }

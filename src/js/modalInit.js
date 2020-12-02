@@ -1,20 +1,29 @@
-export const modalInit = (difficulty) => {
+export class ModalInit {
 
-    let modal = document.querySelector(".modal");
-    let rulesButton = document.getElementById('rules');
-    let close = document.getElementById('close');
-    let rulesImage = document.getElementById('rules-image');
+    constructor() {
+        this.modal = document.querySelector(".modal");
+        this.rulesButton = document.getElementById('rules');
+        this.close = document.getElementById('close');
+        this.rulesImage = document.getElementById('rules-image');
+    };
 
-    rulesButton.addEventListener('click', () => {
-        if(difficulty === 'normal') {
-            rulesImage.setAttribute('src', 'src/images/image-rules.svg');
-        }else{
-            rulesImage.setAttribute('src', 'src/images/image-rules-bonus.svg');
-        }
-        modal.style.display = 'block';
-    })
+    init = () => {
+        this.rulesButton.addEventListener('click', () => {
+            if (this.difficulty === 'normal') {
+                this.rulesImage.setAttribute('src', 'src/images/image-rules.svg');
+            } else {
+                this.rulesImage.setAttribute('src', 'src/images/image-rules-bonus.svg');
+            }
+            this.modal.style.display = 'block';
+        })
 
-    close.addEventListener('click', () => {
-        modal.style.display = 'none';
-    })
+        this.close.addEventListener('click', () => {
+            this.modal.style.display = 'none';
+        })
+    }
+
+    setDifficulty = (difficulty) => {
+        this.difficulty = difficulty;
+        this.init();
+    }
 }
