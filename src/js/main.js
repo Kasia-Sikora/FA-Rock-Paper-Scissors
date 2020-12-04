@@ -1,9 +1,15 @@
-import {modalInit} from './modalInit.js';
-import {localStoragePersist} from "./localStorage.js";
-import {gameRules} from "./gameRules.js";
+import {ModalInit} from './modalInit.js';
+import {LocalStoragePersist} from "./localStorage.js";
+import {GameRules} from "./gameRules.js";
+import {View} from "./view.js";
 
 function start() {
-    gameRules.setDifficulty(modalInit);
+    const view = new View();
+    const localStoragePersist = new LocalStoragePersist(view);
+    const gameRules = new GameRules(localStoragePersist, view);
+    const modal = new ModalInit();
+
+    gameRules.setDifficulty(modal.setDifficulty);
     localStoragePersist.getScore();
 }
 
