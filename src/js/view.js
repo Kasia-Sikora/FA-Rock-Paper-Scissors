@@ -1,49 +1,35 @@
 export class View {
 
-    difficulty = "";
-    gameContainer = document.querySelector('.game');
-    computersEmptySpace = document.querySelector('.circle-computer');
-    userPickText = document.querySelector('.user-pick');
-    computerPickText = document.querySelector('.computer-pick');
-    result = document.querySelector('.result');
-    winner = document.querySelector('.winner');
-    playAgainButton = document.getElementById('play-again');
-    paperButton = document.querySelector('.paper');
-    scissorButton = document.querySelector('.scissors');
-    rockButton = document.querySelector('.rock');
-    spockButton = document.querySelector('.spock');
-    lizardButton = document.querySelector('.lizard');
-    pulse = document.querySelectorAll('.pulse');
-    game = document.querySelector('.page');
-    difficultyPage = document.querySelector('.start-page');
-    buttonsToPick = document.querySelectorAll('.container');
-
-    setBackgroundOnStart = () => {
-        this.removeUnnecessaryElements();
-        this.appendNewElements();
-        this.difficulty === "normal" ? this.gameContainer.style.backgroundImage = 'url("src/images/bg-triangle.svg")' :
-            this.gameContainer.style.backgroundImage = 'url("src/images/bg-pentagon.svg")';
-        this.gameContainer.style.justifyContent = 'space-around';
-        this.pulse.forEach(el => el.style.display = 'none')
-    };
-
-    displayComputerChoice = (element) => {
-        this.computersEmptySpace.style.display = 'none';
-        element.style.display = 'flex';
-        this.gameContainer.insertBefore(element, this.userPickText);
+    constructor() {
+        this.gameContainer = document.querySelector('.game');
+        this.computersEmptySpace = document.querySelector('.circle-computer');
+        this.userPickText = document.querySelector('.user-pick');
+        this.computerPickText = document.querySelector('.computer-pick');
+        this.result = document.querySelector('.result');
+        this.winner = document.querySelector('.winner');
+        this.playAgainButton = document.getElementById('play-again');
+        this.pulse = document.querySelectorAll('.pulse');
+        this.game = document.querySelector('.page');
+        this.difficultyPage = document.querySelector('.start-page');
+        this.buttonsToPick = document.querySelectorAll('.container');
     }
 
-    displayPlayersChoice = (buttonsToPick, difficulty) => {
-        buttonsToPick.forEach(el => el.dataset.userPick === "true" ? el.parentElement.style.display = 'flex' :
-            el.parentElement.parentElement.removeChild(el.parentElement));
-        if (difficulty === 'normal') {
-            this.spockButton.parentElement.style.display = "none";
-            this.lizardButton.parentElement.style.display = "none";
-        }
+    setDifficulty(difficulty, listOfButtons) {
+        this.difficulty = difficulty;
+        this.listOfButtons = listOfButtons;
+        this.displayGame();
+    }
+
+    setGameViewOnStart = () => {
+        this.removeUnnecessaryElements();
+        this.appendNewButtonsToGameContainer(this.listOfButtons);
+        this.setGameBackground();
     };
 
-    setBackgroundOnGame = () => {
-        this.scissorButton.parentElement.style.width = "20vh";
+    setBackgroundOnGamePlay = () => {
+        this.listOfButtons.forEach(button => {
+            if (button.name === "paper") button.parent.style.width = "20vh";
+        })
         this.gameContainer.style.backgroundImage = 'unset';
         this.computersEmptySpace.style.display = 'flex';
         this.computersEmptySpace.parentElement.style.justifyContent = 'space-around';
@@ -52,15 +38,44 @@ export class View {
         this.buttonsToPick.forEach(el => el.style.margin = "unset");
     };
 
+    displayGame = () => {
+        this.game.style.display = 'flex';
+        this.difficultyPage.style.display = 'none';
+        this.setGameViewOnStart();
+    }
+
+    displayComputerChoice = (element) => {
+        this.computersEmptySpace.style.display = 'none';
+        element.style.display = 'flex';
+        this.gameContainer.insertBefore(element, this.userPickText);
+    }
+
+    displayPlayersChoice = (buttonsToPick) => {
+        buttonsToPick.forEach(el => el.node.dataset.userPick === "true" ? el.parent.style.display = 'flex' :
+            el.parent.parentElement.removeChild(el.parent));
+    };
+
+    removeUnnecessaryElements = () => {
+        this.removeButtonNodes();
+        this.removeComputersButtonFromList();
+        this.changeUserPickToFalse();
+    };
+
+    appendNewButtonsToGameContainer = () => {
+        this.listOfButtons.forEach(button => {
+                button.parent.style.display = 'flex';
+                if (this.difficulty === 'bonus') this.setBonusStyles(button);
+                button.node.addEventListener('click', button.getEventListenerFunction());
+                this.gameContainer.insertBefore(button.parent, this.computersEmptySpace)
+            }
+        )
+    };
+
     viewIfPlayerWins = (winner) => {
         this.result.style.display = 'flex';
-        this.playAgainButton.addEventListener('click', this.setBackgroundOnStart.bind(this))
+        this.playAgainButton.addEventListener('click', this.setGameViewOnStart)
         if (winner !== null) {
-            if (winner.dataset.userPick === 'true') {
-                this.winner.innerText = "you win";
-            } else {
-                this.winner.innerText = "you lose";
-            }
+            winner.dataset.userPick === 'true' ? this.winner.innerText = "you win" : this.winner.innerText = "you lose";
             winner.nextElementSibling.style.display = 'block';
         }
     };
@@ -70,59 +85,47 @@ export class View {
     }
 
     displayDraw = (usersNode, computersNode) => {
-        usersNode.nextElementSibling.style.display = 'block';
-        computersNode.nextElementSibling.style.display = 'block';
+        usersNode.node.nextElementSibling.style.display = 'block';
+        computersNode.node.nextElementSibling.style.display = 'block';
         this.winner.innerText = "draw";
     };
 
-    removeUnnecessaryElements = () => {
+    removeComputersButtonFromList() {
+        if (this.listOfButtons.length === 4 || this.listOfButtons.length === 6) {
+            this.listOfButtons.pop();
+        }
+    }
+
+    changeUserPickToFalse() {
+        this.listOfButtons.map(el => {
+            if (el.node.dataset.userPick === 'true') el.node.dataset.userPick = "false";
+        })
+    }
+
+    removeButtonNodes() {
         for (let i = this.gameContainer.childElementCount - 1; i >= 0; i--) {
-            if (this.gameContainer.children[i].classList.contains('container')) {
-                this.gameContainer.removeChild(this.gameContainer.children[i])
-            } else {
+            this.gameContainer.children[i].classList.contains('container') ? 
+                this.gameContainer.removeChild(this.gameContainer.children[i]) :
                 this.gameContainer.children[i].style.display = 'none';
-            }
         }
-    };
+    }
 
-    appendNewElements = () => {
-        if (this.difficulty === 'normal') {
-            this.gameContainer.insertBefore(this.paperButton.parentElement, this.computersEmptySpace);
-            this.gameContainer.insertBefore(this.scissorButton.parentElement, this.computersEmptySpace);
-            this.gameContainer.insertBefore(this.rockButton.parentElement, this.computersEmptySpace);
-        } else {
-            this.gameContainer.insertBefore(this.scissorButton.parentElement, this.computersEmptySpace);
-            this.scissorButton.parentElement.style.width = "100%";
-            this.scissorButton.parentElement.style.marginBottom = "-7vh";
-            this.gameContainer.insertBefore(this.spockButton.parentElement, this.computersEmptySpace);
-            this.spockButton.parentElement.style.marginLeft = "-3vh";
-            this.gameContainer.insertBefore(this.paperButton.parentElement, this.computersEmptySpace);
-            this.paperButton.parentElement.style.marginRight = "-3vh";
-            this.gameContainer.insertBefore(this.lizardButton.parentElement, this.computersEmptySpace);
-            this.lizardButton.parentElement.style.marginLeft = "3vh";
-            this.gameContainer.insertBefore(this.rockButton.parentElement, this.computersEmptySpace);
-            this.rockButton.parentElement.style.marginRight = "3vh";
+    setBonusStyles(button) {
+        if (button.name === "paper") {
+            button.parent.style.width = "100%";
+            button.parent.style.marginBottom = "-7vh";
+        } else if (button.name === "spock" || button.name === "scissors") {
+            button.name === 'spock' ? button.parent.style.marginLeft = "-3vh" : button.parent.style.marginRight = "-3vh"
+        } else if (button.name === "lizard" || button.name === "rock") {
+            button.name === 'lizard' ? button.parent.style.marginLeft = "3vh" : button.parent.style.marginRight = "3vh"
         }
-    };
+    }
 
-    displayGame = (difficulty) => {
-        this.difficulty = difficulty;
-        this.game.style.display = 'flex';
-        this.difficultyPage.style.display = 'none';
-        this.appendNewElements();
-        if (this.difficulty === 'normal') {
-            this.paperButton.parentElement.style.display = "flex";
-            this.scissorButton.parentElement.style.display = "flex";
-            this.rockButton.parentElement.style.display = "flex";
-        } else {
+    setGameBackground() {
+        this.difficulty === "normal" ? this.gameContainer.style.backgroundImage = 'url("src/images/bg-triangle.svg")' :
             this.gameContainer.style.backgroundImage = 'url("src/images/bg-pentagon.svg")';
-            this.gameContainer.style.backgroundSize = '70%';
-            this.scissorButton.parentElement.style.display = "flex";
-            this.scissorButton.parentElement.style.width = "100%";
-            this.spockButton.parentElement.style.display = "flex";
-            this.paperButton.parentElement.style.display = "flex";
-            this.lizardButton.parentElement.style.display = "flex";
-            this.rockButton.parentElement.style.display = "flex";
-        }
+        this.gameContainer.style.backgroundSize = '60%';
+        this.gameContainer.style.justifyContent = 'space-around';
+        this.pulse.forEach(button => button.style.display = 'none')
     }
 }
