@@ -1,5 +1,11 @@
 # Frontend Mentor - Rock, Paper, Scissors
 
+My Solution: 
+<img src="https://raw.githubusercontent.com/Kasia-Sikora/FA-Rock-Paper-Scissors/main/src/images/Screenshot.png" width="50%" height="50%">
+
+
+Original: 
+
 ![Design preview for the Rock, Paper, Scissors coding challenge](./design/desktop-preview.jpg)
 
 ## Welcome! 👋
